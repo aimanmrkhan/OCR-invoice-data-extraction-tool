@@ -1,0 +1,161 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extracting OCR data for given Invoice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            width: 90%;
+            max-width: 600px;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .title-bar {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-bottom: 20px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        h1, h2 {
+            margin: 0;
+            color: #333;
+        }
+
+        .file-input {
+            margin-bottom: 20px;
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .file-display {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            max-height: 400px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow-y: auto;
+            margin-top: 10px;
+            border-radius: 4px;
+        }
+
+        .file-path {
+            width: 100%;
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+            input[type="submit"]:hover {
+                background-color: #45a049;
+            }
+
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title-bar">
+            <h1>Invoice Data Extraction</h1>
+        </div>
+        <h2>Select File → View → Proceed with Extraction of Data into Database</h2>
+        <input type="file" id="fileInput" class="file-input" onchange="handleFileSelect(event)" />
+        <div id="fileDisplay" class="file-display"></div>
+        <textarea id="filePath" class="file-path" readonly></textarea>
+
+        <form id="myForm" action="http://localhost:3000/name?filename=north.png` method="GET">
+            <input type="submit" value="Extract Data">
+        </form>
+
+        <footer>
+            &copy; 2024 Revamp Technologies. All rights reserved.(Mohammed Aiman Khan)
+        </footer>
+    </div>
+
+    <script>
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                const fileType = getFileType(file);
+                if (fileType === 'image') {
+                    displayImage(e.target.result);
+                } else {
+                    displayText(e.target.result);
+                }
+                displayFilePath(file);
+            };
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function getFileType(file) {
+            if (file.type.startsWith('image')) {
+                return 'image';
+            }
+            return 'text';
+        }
+
+        function displayImage(src) {
+            const imageDisplay = document.getElementById('fileDisplay');
+            imageDisplay.innerHTML = `<img src="${src}" class="file-display" />`;
+        }
+
+        function displayText(contents) {
+            const textDisplay = document.getElementById('fileDisplay');
+            textDisplay.innerHTML = `<textarea class="file-display" readonly>${contents}</textarea>`;
+        }
+
+        function displayFilePath(file) {
+            const filePathTextbox = document.getElementById('filePath');
+            filePathTextbox.value = `${file.name}`;
+        }
+    </script>
+</body>
+</html>

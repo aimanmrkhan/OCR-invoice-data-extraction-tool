@@ -1,0 +1,9 @@
+Extracted Information:
+Invoice Number: CAS\2223\013
+Invoice Date: 14/06/2024
+Subtotal: Sub Total 2490.00
+Cgst: cGsT 224.10
+Sgst: sGsT 224.10
+Total: Total 2490.00
+Supplier Name: Demo Company es
+GSTIN: GSTIN
